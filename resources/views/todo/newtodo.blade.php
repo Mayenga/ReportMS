@@ -56,7 +56,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <label for="inputDate" class="col-sm-2 col-form-label">Activity Deadline</label>
+                  <label for="inputDate" class="col-sm-3 col-form-label">Activity Deadline</label>
                   <div class="col-sm-10">
                     <input type="date" name="deadline" class="form-control">
                   </div>
@@ -67,22 +67,19 @@
                     <label for="floatingZip">Output</label>
                   </div>
                 </div>
-                @if (Auth::user()->hasRole('dg'))
-                <div class="row mb-3 col-md-6">
-                  <label class="col-sm-2 col-form-label">Transfer Activity</label>
-                  <div class="col-sm-10">
-                  <?php 
-                    $dpts = DB::select('SELECT * FROM departments');
-                  ?>
-                    <select name="transfer" class="form-select" multiple aria-label="multiple select example">
-                      <option value="" selected>Select Department or Section</option>
-                      @foreach($dpts AS $dpt)
-                        <option value="{{ $dpt->id }}">{{$dpt->name}}</option>
-                      @endforeach
-                    </select>
-                  </div>
-                </div>
-                @endif
+                <?php
+                  $dpts = DB::select("SELECT * FROM departments");
+                  if (Auth::user()->hasRole('dg')){
+                    echo "<div class='col-sm-5'>
+                    <label class='col-sm-4 col-form-label'>Transfer Activity</label>
+                            <select name='transfer' class='form-select' aria-label='Default select example'>
+                    <option value='' selected>Select Department or section</option>";
+                    foreach($dpts as $dpt){
+                      echo "<option value='{{$dpt->id}}'>$dpt->name</option>";
+                    }
+                    echo '</select></div>';
+                  }?>
+
                 @if (Auth::user()->hasRole('director'))
                 <div class="row mb-3 col-md-6">
                   <label class="col-sm-2 col-form-label">Transfer Activity</label>
