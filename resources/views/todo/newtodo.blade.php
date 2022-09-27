@@ -98,9 +98,6 @@
                     foreach($dg As $dgid){
                       $dg = $dgid->id;
                     }
-                    if($dg == ''){
-                      $dg = 0;
-                    }
                     $users = DB::select("SELECT * FROM users WHERE dpt_id = $iddd AND id != $id AND id != $dg");
                   ?>
                     <select name="transferUser" class="form-select" multiple aria-label="multiple select example">
